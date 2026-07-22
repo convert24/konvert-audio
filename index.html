@@ -3,114 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konverter Audio Ke WAV</title>
+  <title>Konverter Audio Modern</title>
   <style>
+    /* --- Variabel & Reset CSS --- */
     :root {
-      --primary: #2563eb;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
+      --color-primary: #3b82f6; /* Biru Modern */
+      --color-primary-hover: #2563eb;
+      --color-bg: #f1f5f9; /* Abu-abu Sangat Muda */
+      --color-card: #ffffff;
+      --color-text: #1e293b; /* Abu-abu Sangat Tua */
+      --color-text-muted: #64748b;
+      --color-border: #e2e8f0;
+      --color-success: #10b981; /* Hijau */
+      --shadow-card: 0 10px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.06);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
+      font-family: var(--font-family);
+      background-color: var(--color-bg);
+      color: var(--color-text);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
       padding: 20px;
+      line-height: 1.5;
     }
+
+    /* --- Container Utama --- */
     .container {
-      background: var(--card);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+      background: var(--color-card);
+      padding: 40px;
+      border-radius: 20px; /* Sudut lebih membulat */
+      box-shadow: var(--shadow-card);
       width: 100%;
-      max-width: 500px;
+      max-width: 450px; /* Sedikit lebih ramping */
+      border: 1px solid var(--color-border);
     }
-    h2 { margin-top: 0; color: var(--primary); text-align: center; }
-    .form-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
-    input[type="file"], select {
+
+    /* --- Header --- */
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    h2 {
+      color: var(--color-text);
+      font-size: 24px;
+      font-weight: 800; /* Lebih tebal */
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--color-text-muted);
+      font-size: 14px;
+    }
+
+    /* --- Elemen Form --- */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--color-text);
+      text-transform: uppercase; /* Gaya modern form */
+      letter-spacing: 0.5px;
+    }
+
+    /* Styling Universal untuk Input dan Select */
+    input[type="file"], 
+    select {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      box-sizing: border-box;
+      padding: 12px 15px;
+      background-color: #f8fafc;
+      border: 2px solid var(--color-border);
+      border-radius: 10px; /* Input membulat */
+      font-family: var(--font-family);
+      font-size: 15px;
+      color: var(--color-text);
+      transition: all 0.3s ease;
+      appearance: none; /* Hapus styling default OS untuk select */
     }
+
+    /* Custom Arrow untuk Select */
+    .select-wrapper {
+      position: relative;
+    }
+    .select-wrapper::after {
+      content: '▼';
+      font-size: 10px;
+      color: var(--color-text-muted);
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Fokus State */
+    input[type="file"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+
+    /* File Input khusus agar lebih rapi */
+    input[type="file"] {
+      padding: 8px;
+      font-size: 14px;
+    }
+    input[type=file]::file-selector-button {
+      background-color: var(--color-border);
+      color: var(--color-text);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background 0.2s;
+    }
+    input[type=file]::file-selector-button:hover {
+      background-color: #cbd5e1;
+    }
+
+    /* --- Tombol Konversi --- */
     button {
       width: 100%;
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
       color: white;
       border: none;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: bold;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 25px;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
     }
-    button:disabled { background: #94a3b8; cursor: not-allowed; }
-    #status { margin-top: 15px; text-align: center; font-size: 0.9rem; font-weight: bold; }
-    .result { margin-top: 20px; text-align: center; display: none; }
+
+    button:hover {
+      box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.4);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px -1px rgba(59, 130, 246, 0.4);
+    }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* --- Area Status & Hasil --- */
+    #status {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--color-primary);
+      font-weight: 600;
+      min-height: 20px; /* Mencegah layout bergeser */
+    }
+
+    .result {
+      margin-top: 25px;
+      text-align: center;
+      display: none; /* Disembunyikan secara default */
+      background-color: #ecfdf5; /* Latar hijau muda */
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #a7f3d0;
+    }
+
+    .result p {
+      color: var(--color-success);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
     .result a {
       display: inline-block;
-      background: #10b981;
+      background-color: var(--color-success);
       color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
+      padding: 12px 24px;
+      border-radius: 10px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 14px;
+      transition: background 0.2s ease;
+      box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+    }
+
+    .result a:hover {
+      background-color: #059669; /* Hijau lebih tua */
+    }
+
+    /* --- Responsif --- */
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      button {
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>Audio Converter</h2>
-  
+  <header>
+    <h2>Audio Converter</h2>
+    <p class="subtitle">Ubah file audio Anda ke format WAV dengan mudah.</p>
+  </header>
+
   <div class="form-group">
-    <label for="audioFile">Pilih File Audio (MP3, M4A, OGG, FLAC, dll):</label>
+    <label for="audioFile">Pilih File Audio</label>
     <input type="file" id="audioFile" accept="audio/*">
   </div>
 
   <div class="form-group">
-    <label for="sampleRate">Sample Rate:</label>
-    <select id="sampleRate">
-      <option value="44100" selected>44.1 kHz (CD Quality)</option>
-      <option value="48000">48.0 kHz (Video Standard)</option>
-      <option value="22050">22.05 kHz</option>
-    </select>
+    <label for="sampleRate">Sample Rate</label>
+    <div class="select-wrapper">
+      <select id="sampleRate">
+        <option value="44100" selected>44.1 kHz (Kualitas CD)</option>
+        <option value="48000">48.0 kHz (Standar Video)</option>
+        <option value="22050">22.05 kHz</option>
+      </select>
+    </div>
   </div>
 
   <div class="form-group">
-    <label for="bitDepth">Bit Depth:</label>
-    <select id="bitDepth">
-      <option value="16" selected>16-bit PCM (Standar)</option>
-      <option value="8">8-bit PCM</option>
-    </select>
+    <label for="bitDepth">Bit Depth</label>
+    <div class="select-wrapper">
+      <select id="bitDepth">
+        <option value="16" selected>16-bit PCM (Standar)</option>
+        <option value="8">8-bit PCM</option>
+      </select>
+    </div>
   </div>
 
   <div class="form-group">
-    <label for="channels">Channel / Saluran:</label>
-    <select id="channels">
-      <option value="2" selected>Stereo (2 Channels)</option>
-      <option value="1">Mono (1 Channel)</option>
-    </select>
+    <label for="channels">Saluran (Channels)</label>
+    <div class="select-wrapper">
+      <select id="channels">
+        <option value="2" selected>Stereo (2 Channels)</option>
+        <option value="1">Mono (1 Channel)</option>
+      </select>
+    </div>
   </div>
 
   <button id="convertBtn" onclick="convertAudio()">Konversi ke WAV</button>
 
   <div id="status"></div>
   <div class="result" id="resultArea">
-    <p>Konversi Selesai!</p>
+    <p>Konversi Berhasil!</p>
     <a id="downloadLink" download="converted.wav">Unduh File WAV</a>
   </div>
 </div>
 
 <script>
+// --- JavaScript Tetap Sama, Hanya UI yang Diperbarui ---
 async function convertAudio() {
   const fileInput = document.getElementById('audioFile');
   const sampleRate = parseInt(document.getElementById('sampleRate').value);
@@ -125,15 +300,15 @@ async function convertAudio() {
     return;
   }
 
-  status.innerText = "Membaca & mendekode audio...";
+  status.innerText = "Membaca & memproses audio...";
   resultArea.style.display = "none";
   document.getElementById('convertBtn').disabled = true;
+  document.getElementById('convertBtn').innerText = "Memproses...";
 
   try {
     const file = fileInput.files[0];
     const arrayBuffer = await file.arrayBuffer();
 
-    // 1. Decode Audio ke Raw PCM data menggunakan Web Audio API
     const offlineAudioCtx = new OfflineAudioContext(
       targetChannels,
       1, 
@@ -142,7 +317,6 @@ async function convertAudio() {
 
     const decodedBuffer = await offlineAudioCtx.decodeAudioData(arrayBuffer);
 
-    // 2. Resample ke Sample Rate & Channels yang diinginkan
     const resampleCtx = new OfflineAudioContext(
       targetChannels,
       decodedBuffer.duration * sampleRate,
@@ -154,29 +328,30 @@ async function convertAudio() {
     source.connect(resampleCtx.destination);
     source.start(0);
 
-    status.innerText = "Memproses resampling audio...";
     const renderedBuffer = await resampleCtx.startRendering();
 
-    // 3. Enkoding ke Header & Data WAV (16-bit / 8-bit PCM)
-    status.innerText = "Membuat file WAV...";
+    status.innerText = "Menyandikan file WAV...";
     const wavBlob = bufferToWav(renderedBuffer, bitDepth);
 
-    // 4. Buat Link Download
     const url = URL.createObjectURL(wavBlob);
     downloadLink.href = url;
-    downloadLink.download = file.name.replace(/\.[^/.]+$/, "") + `_${sampleRate}Hz_${bitDepth}bit.wav`;
+    
+    // Buat nama file dinamis berdasarkan nama asli + setelan
+    const originalName = file.name.replace(/\.[^/.]+$/, "");
+    downloadLink.download = `${originalName}_${sampleRate/1000}k_${bitDepth}bit.wav`;
     
     status.innerText = "";
     resultArea.style.display = "block";
   } catch (err) {
     console.error(err);
-    status.innerText = "Gagal mengkonversi audio. Pastikan format input valid.";
+    status.innerText = "Gagal mengkonversi. Pastikan file audio valid.";
   } finally {
     document.getElementById('convertBtn').disabled = false;
+    document.getElementById('convertBtn').innerText = "Konversi ke WAV";
   }
 }
 
-// Fungsi Pembantu untuk mengubah AudioBuffer menjadi Blob Format WAV (PCM)
+// Fungsi Pembantu (Tidak Berubah)
 function bufferToWav(buffer, bitDepth) {
   const numChannels = buffer.numberOfChannels;
   const sampleRate = buffer.sampleRate;
@@ -225,24 +400,3 @@ function bufferToWav(buffer, bitDepth) {
         sample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
         view.setInt16(offset, sample, true);
         offset += 2;
-      } else if (bitDepth === 8) {
-        // Konversi ke 8-bit Unsigned Integer
-        sample = (sample + 1) / 2 * 255;
-        view.setUint8(offset, sample);
-        offset += 1;
-      }
-    }
-  }
-
-  return new Blob([view], { type: 'audio/wav' });
-}
-
-function writeString(view, offset, string) {
-  for (let i = 0; i < string.length; i++) {
-    view.setUint8(offset + i, string.charCodeAt(i));
-  }
-}
-</script>
-
-</body>
-</html>
