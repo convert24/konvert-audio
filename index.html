@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Convert24 Audio</title>
+  <title>Convert24 Audio - Konverter WAV Modern</title>
   <style>
     /* --- Variabel & Reset CSS --- */
     :root {
-      --color-primary: #3b82f6; /* Biru Modern */
+      --color-primary: #3b82f6; 
       --color-primary-hover: #2563eb;
-      --color-bg: #f1f5f9; /* Abu-abu Sangat Muda */
+      --color-bg: #f1f5f9; 
       --color-card: #ffffff;
-      --color-text: #1e293b; /* Abu-abu Sangat Tua */
+      --color-text: #1e293b; 
       --color-text-muted: #64748b;
       --color-border: #e2e8f0;
-      --color-success: #10b981; /* Hijau */
+      --color-success: #10b981; 
       --shadow-card: 0 10px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.06);
       --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -41,10 +41,10 @@
     .container {
       background: var(--color-card);
       padding: 40px;
-      border-radius: 20px; /* Sudut lebih membulat */
+      border-radius: 20px;
       box-shadow: var(--shadow-card);
       width: 100%;
-      max-width: 450px; /* Sedikit lebih ramping */
+      max-width: 450px;
       border: 1px solid var(--color-border);
     }
 
@@ -57,7 +57,7 @@
     h2 {
       color: var(--color-text);
       font-size: 24px;
-      font-weight: 800; /* Lebih tebal */
+      font-weight: 800;
       letter-spacing: -0.5px;
       margin-bottom: 8px;
     }
@@ -67,7 +67,7 @@
       font-size: 14px;
     }
 
-    /* --- Elemen Form --- */
+    /* --- Form Elements --- */
     .form-group {
       margin-bottom: 20px;
     }
@@ -78,26 +78,24 @@
       font-weight: 600;
       font-size: 13px;
       color: var(--color-text);
-      text-transform: uppercase; /* Gaya modern form */
+      text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    /* Styling Universal untuk Input dan Select */
     input[type="file"], 
     select {
       width: 100%;
       padding: 12px 15px;
       background-color: #f8fafc;
       border: 2px solid var(--color-border);
-      border-radius: 10px; /* Input membulat */
+      border-radius: 10px;
       font-family: var(--font-family);
       font-size: 15px;
       color: var(--color-text);
       transition: all 0.3s ease;
-      appearance: none; /* Hapus styling default OS untuk select */
+      appearance: none;
     }
 
-    /* Custom Arrow untuk Select */
     .select-wrapper {
       position: relative;
     }
@@ -112,7 +110,6 @@
       pointer-events: none;
     }
 
-    /* Fokus State */
     input[type="file"]:focus,
     select:focus {
       outline: none;
@@ -121,7 +118,6 @@
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 
-    /* File Input khusus agar lebih rapi */
     input[type="file"] {
       padding: 8px;
       font-size: 14px;
@@ -140,7 +136,7 @@
       background-color: #cbd5e1;
     }
 
-    /* --- Tombol Konversi --- */
+    /* --- Tombol --- */
     button {
       width: 100%;
       background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
@@ -163,7 +159,6 @@
 
     button:active {
       transform: translateY(1px);
-      box-shadow: 0 2px 4px -1px rgba(59, 130, 246, 0.4);
     }
 
     button:disabled {
@@ -173,21 +168,21 @@
       box-shadow: none;
     }
 
-    /* --- Area Status & Hasil --- */
+    /* --- Status & Output --- */
     #status {
       margin-top: 20px;
       text-align: center;
       font-size: 14px;
       color: var(--color-primary);
       font-weight: 600;
-      min-height: 20px; /* Mencegah layout bergeser */
+      min-height: 20px;
     }
 
     .result {
       margin-top: 25px;
       text-align: center;
-      display: none; /* Disembunyikan secara default */
-      background-color: #ecfdf5; /* Latar hijau muda */
+      display: none;
+      background-color: #ecfdf5;
       padding: 20px;
       border-radius: 12px;
       border: 1px solid #a7f3d0;
@@ -214,20 +209,13 @@
     }
 
     .result a:hover {
-      background-color: #059669; /* Hijau lebih tua */
+      background-color: #059669;
     }
 
-    /* --- Responsif --- */
     @media (max-width: 480px) {
-      .container {
-        padding: 25px;
-      }
-      h2 {
-        font-size: 20px;
-      }
-      button {
-        padding: 12px;
-      }
+      .container { padding: 25px; }
+      h2 { font-size: 20px; }
+      button { padding: 12px; }
     }
   </style>
 </head>
@@ -285,73 +273,77 @@
 </div>
 
 <script>
-// --- JavaScript Tetap Sama, Hanya UI yang Diperbarui ---
 async function convertAudio() {
   const fileInput = document.getElementById('audioFile');
-  const sampleRate = parseInt(document.getElementById('sampleRate').value);
+  const targetSampleRate = parseInt(document.getElementById('sampleRate').value);
   const bitDepth = parseInt(document.getElementById('bitDepth').value);
   const targetChannels = parseInt(document.getElementById('channels').value);
   const status = document.getElementById('status');
   const resultArea = document.getElementById('resultArea');
   const downloadLink = document.getElementById('downloadLink');
+  const convertBtn = document.getElementById('convertBtn');
 
   if (!fileInput.files[0]) {
     alert("Harap pilih file audio terlebih dahulu!");
     return;
   }
 
-  status.innerText = "Membaca & memproses audio...";
+  status.innerText = "Membaca & mendekode audio...";
   resultArea.style.display = "none";
-  document.getElementById('convertBtn').disabled = true;
-  document.getElementById('convertBtn').innerText = "Memproses...";
+  convertBtn.disabled = true;
+  convertBtn.innerText = "Memproses...";
 
   try {
     const file = fileInput.files[0];
     const arrayBuffer = await file.arrayBuffer();
 
-    const offlineAudioCtx = new OfflineAudioContext(
+    // 1. Gunakan AudioContext standar untuk dekode data mentah terlebih dahulu
+    const tempAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const decodedBuffer = await tempAudioContext.decodeAudioData(arrayBuffer);
+    
+    // Tutup context sementara setelah dekode selesai
+    await tempAudioContext.close();
+
+    status.innerText = "Memproses resampling audio...";
+
+    // 2. Buat OfflineAudioContext dengan durasi dan sampel rate yang benar
+    const totalFrames = Math.ceil(decodedBuffer.duration * targetSampleRate);
+    const offlineCtx = new OfflineAudioContext(
       targetChannels,
-      1, 
-      sampleRate
+      totalFrames,
+      targetSampleRate
     );
 
-    const decodedBuffer = await offlineAudioCtx.decodeAudioData(arrayBuffer);
-
-    const resampleCtx = new OfflineAudioContext(
-      targetChannels,
-      decodedBuffer.duration * sampleRate,
-      sampleRate
-    );
-
-    const source = resampleCtx.createBufferSource();
+    // 3. Masukkan buffer yang sudah didekode ke pipeline offline
+    const source = offlineCtx.createBufferSource();
     source.buffer = decodedBuffer;
-    source.connect(resampleCtx.destination);
+    source.connect(offlineCtx.destination);
     source.start(0);
 
-    const renderedBuffer = await resampleCtx.startRendering();
+    const renderedBuffer = await offlineCtx.startRendering();
 
-    status.innerText = "Menyandikan file WAV...";
+    status.innerText = "Menyandikan ke format WAV...";
     const wavBlob = bufferToWav(renderedBuffer, bitDepth);
 
+    // 4. Siapkan link unduhan
     const url = URL.createObjectURL(wavBlob);
     downloadLink.href = url;
     
-    // Buat nama file dinamis berdasarkan nama asli + setelan
     const originalName = file.name.replace(/\.[^/.]+$/, "");
-    downloadLink.download = `${originalName}_${sampleRate/1000}k_${bitDepth}bit.wav`;
+    downloadLink.download = `${originalName}_${targetSampleRate/1000}k_${bitDepth}bit.wav`;
     
     status.innerText = "";
     resultArea.style.display = "block";
   } catch (err) {
     console.error(err);
-    status.innerText = "Gagal mengkonversi. Pastikan file audio valid.";
+    status.innerText = "Gagal mengkonversi. Pastikan format file audio valid.";
   } finally {
-    document.getElementById('convertBtn').disabled = false;
-    document.getElementById('convertBtn').innerText = "Konversi ke WAV";
+    convertBtn.disabled = false;
+    convertBtn.innerText = "Konversi ke WAV";
   }
 }
 
-// Fungsi Pembantu (Tidak Berubah)
+// Fungsi penyusun header dan data PCM WAV
 function bufferToWav(buffer, bitDepth) {
   const numChannels = buffer.numberOfChannels;
   const sampleRate = buffer.sampleRate;
@@ -369,20 +361,22 @@ function bufferToWav(buffer, bitDepth) {
   writeString(view, 0, 'RIFF');
   view.setUint32(4, 36 + dataLength, true);
   writeString(view, 8, 'WAVE');
+  
   /* Sub-chunk "fmt " */
   writeString(view, 12, 'fmt ');
-  view.setUint32(16, 16, true); // ukuran Subchunk1
+  view.setUint32(16, 16, true);
   view.setUint16(20, format, true);
   view.setUint16(22, numChannels, true);
   view.setUint32(24, sampleRate, true);
-  view.setUint32(28, sampleRate * blockAlign, true); // ByteRate
+  view.setUint32(28, sampleRate * blockAlign, true);
   view.setUint16(32, blockAlign, true);
   view.setUint16(34, bitDepth, true);
+
   /* Sub-chunk "data" */
   writeString(view, 36, 'data');
   view.setUint32(40, dataLength, true);
 
-  // Tulis sampel data audio
+  // Ambil channel data
   const channels = [];
   for (let i = 0; i < numChannels; i++) {
     channels.push(buffer.getChannelData(i));
@@ -392,11 +386,32 @@ function bufferToWav(buffer, bitDepth) {
   for (let i = 0; i < buffer.length; i++) {
     for (let ch = 0; ch < numChannels; ch++) {
       let sample = channels[ch][i];
-      // Clamp sampel ke rentang [-1, 1]
+      // Melindungi dari clipping [-1, 1]
       sample = Math.max(-1, Math.min(1, sample));
 
       if (bitDepth === 16) {
-        // Konversi ke 16-bit Signed Integer
+        // 16-bit Signed Integer
         sample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
         view.setInt16(offset, sample, true);
         offset += 2;
+      } else if (bitDepth === 8) {
+        // 8-bit Unsigned Integer
+        sample = (sample + 1) / 2 * 255;
+        view.setUint8(offset, sample);
+        offset += 1;
+      }
+    }
+  }
+
+  return new Blob([view], { type: 'audio/wav' });
+}
+
+function writeString(view, offset, string) {
+  for (let i = 0; i < string.length; i++) {
+    view.setUint8(offset + i, string.charCodeAt(i));
+  }
+}
+</script>
+
+</body>
+</html>
